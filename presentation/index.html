@@ -58,8 +58,8 @@
 					<p>on who gets to be on the cloud!</p> 
 
 					<!-- UNCOMMENT THIS TO TURN VIDEO/AUDIO FOR STONES!!!!!! -->
-					<iframe width="420" height="315" src="http://www.youtube.com/embed/YlhPRuAve8k?autoplay=1&cc_load_policy=1&start=157&end=11" frameborder="0"
-					allowfullscreen></iframe>
+					<!-- <iframe width="420" height="315" src="http://www.youtube.com/embed/YlhPRuAve8k?autoplay=1&cc_load_policy=1&start=157&end=11" frameborder="0"
+					allowfullscreen></iframe> -->
 					
 				</section>
 
@@ -104,11 +104,49 @@
 					</br>
 					Import API
 					<img data-src="http://docs.cartodb.com/img/icons/importapi.786876b4.png" style="background:none; border:none; box-shadow:none;">
-					</p>
+					</br>...using <a href="https://gist.github.com/andrewxhill/093c89fa45e5f657fec7#file-cartodb-utils-py" target='_blank'>cartodb-utils.py</a></p>
 				</section>
+<section>
+<p>Drop any single shapefile in the </br><pre><code>cartodb_demo/data/*your_shapefile*.shp</code></pre>folder</p>
+</section>
+				
+<section>
+<script src="https://gist.github.com/nygeog/58208e3db5750927cb79.js"></script>
+</section>
 
+<section>
+<pre><code data-trim>import os
+import zipfile
+import glob
+import _secret_info
 
+cdbU = _secret_info.cartoDBusername
+cdbK = _secret_info.cartoDBapikey
 
+shpFolder  = 'data'
+
+theSHP     = [os.path.basename(x) for x in glob.glob(shpFolder+'/*.shp')][0] # find filename of any file in folder w/ .shp using glob
+theSHPname = theSHP.replace('.shp','')
+
+def zipYourSHP(src, dst):
+    zf = zipfile.ZipFile("%s.zip" % (dst), "w", zipfile.ZIP_DEFLATED)
+    abs_src = os.path.abspath(src)
+    for dirname, subdirs, files in os.walk(src):
+        for filename in files:
+            absname = os.path.abspath(os.path.join(dirname, filename))
+            arcname = absname[len(abs_src) + 1:]
+            print 'zipping %s as %s' % (os.path.join(dirname, filename),
+                                        arcname)
+            zf.write(absname, arcname)
+    zf.close()
+
+print theSHPname, ' ...is the name of your shapefile.'
+
+zipYourSHP(shpFolder, 'data_to_cdb')
+
+impCMD = "python cartodb-utils.py import -f data_to_cdb.zip -k "+cdbK+" -u  "+cdbU
+os.system(impCMD)</code></pre>
+</section>
 
 				<section data-background="#0090D7">
 					Rolling Stones tour map
