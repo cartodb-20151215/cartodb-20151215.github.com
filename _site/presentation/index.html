@@ -46,12 +46,20 @@
 
 					<!-- <p>Hey, you,</p> -->
 					
-					<h3>The Cloud Is Yours, Get On it!</h3>
+					<h1>The Cloud Is Yours, Get On it!</h1>
 					<img data-src="https://raw.githubusercontent.com/cartodb-20151215/cartodb-20151215.github.com/master/presentation/img/logos_cartofant_cartodb_dark.png" alt="cartodb-logo" width='250px' style="background:none; border:none; box-shadow:none;">
 					<p> (with your maps and GIS data)</p> 
 					
 					<!-- <p>test					</p> -->
 				</section>
+				<section data-background="#0090D7">
+					<h2>Today we'll go over...</h2><h4>
+					<li>Creating Your First Web Map, editing JavaScript</li>
+					<li>From Shapefile to CartoDB</li>
+					<li>Geoprocessing with CartoDB</li></h4>
+				</section>
+
+
 
 				<section data-background="#0090D7">
 					<p>The Stones need to be more inclusionary</p>
@@ -91,13 +99,229 @@
 				</br>
 					CartoCSS
 					<img data-src="http://docs.cartodb.com/img/icons/cartocss.df9e50f3.png" style="background:none; border:none; box-shadow:none;"></p>
-
-				
+				</section>
+				<section data-background="#0090D7">
+					<p>And a lot of </br> <img data-src="http://pngimg.com/upload/heart_PNG706.png" style="background:none; border:none; box-shadow:none; width:400px;"> </br> for Open Source Software</p>
 
 				</section>
 				
+				<section>
+					<h4>Before we get started...</h4>
+					<p>Let's install a text editor.</br><a href='http://www.sublimetext.com/2'>
+					<img data-src="https://upload.wikimedia.org/wikipedia/en/4/4c/Sublime_Text_Logo.png" style="background:none; border:none; box-shadow:none;"></br>Sublime Text</a></p>
 
 
+				</section>
+				<section >
+				<!-- <h4>Before we get started...</h4> -->
+					<p><a href='https://github.com/cartodb-20151215/cartodb_demo/archive/master.zip'>And grab code for the exercises...</br>
+						<img data-src="img/Octocat/Octocat.png" style="background:none; border:none; box-shadow:none; width:200px;">
+					<img data-src="http://www.emodnet.eu/sites/emodnet.eu/files/public/download.png" style="background:none; border:none; box-shadow:none; width:200px;"></br>cartodb_demo-master.zip</a>, once downloaded, unzip.</p>
+				</section>
+
+				<section>
+				<p>Fire up your terminal...</p>
+				<img data-src="http://media.idownloadblog.com/wp-content/uploads/2015/01/Terminal-icon-Yosemite-220x220.png" style="background:none; border:none; box-shadow:none; width:400px;">
+				</section>
+
+				<section>
+					<p>Now let's <a href="http://guides.macrumors.com/cd" target="_blank">change directory</a> to our files.</p>
+					<pre><code>$ cd your/path/to/cartodb_demo-master</pre></code>
+					<p>The above code may need to look something like this, if you downloaded the folder to your desktop:</p>
+					<pre><code>$ cd Desktop/cartodb_demo-master</pre></code>
+					<small>from here on, we won't show <code>$</code> in our terminal code, just assume its there</small>
+				</section>
+
+				<section>
+				<p>Paste this code...</p>
+				<pre><code>python -m SimpleHTTPServer 8000</pre></code>
+				<p>...into your terminal. Hit return to fire up this local server.</p>
+				</section>
+
+				<section>
+					<h1>Quick Summary</h1>
+					<li>1. Installed a Text Editor</li>
+					<li>2. Downloaded Exercise Files</li>
+					<li>3. UnZipped Exercise Files</li>
+					<li>4. Opened Terminal</li>
+					<li>5. Changed directory in Terminal to our Exercise Files</li>
+					<li>6. Fired up a SimpleHTTPServer at port 8000</li>
+				</section>
+
+				<section>
+					<p>Open a Web Browser and paste...
+					<code>http://localhost:8000</code>
+					<p>...into your browser</p>
+				</section> 
+				<section>
+					<p>Your are now running a web server and serving up <code>html</code> files.</p>
+				</section> 
+				<section>
+				<p>You're seeing a file named: <code>index.html</code>. Serving up an <code>html</code> file with source code that looks like this:</p>
+				<pre><code><h1>List of links</h1>
+<li><a href='../map/tutorial-1'>Link to Map 1</a></li>
+</pre></code>
+				</section>
+				<section>
+					<p>Now this may seem like a lot of new information and steps, but it will soon be second nature.</p>
+				</section>
+
+				<section>
+					<a href='http://localhost:8000/map/tutorial-1/' target='_blank'>Let's check out and work with our first map (click here).</a>
+				</section>
+
+				<section data-background="#0090D7">
+					Now, in <em>Sublime Text</em>, let's open the <code>index.html</code> file located here:
+					<pre><code>cartodb_demo/map/tutorial-1/index.html</pre></code>
+				</section>
+
+				<section data-background="#0090D7">
+					<p>Okay, so lets see the first few bits of code</p>
+					<pre><code>
+
+<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+
+<script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+
+</pre></code>
+				<p>We're calling in some <code>CSS</code> stylesheets and 
+				JavaScript from <code>libs.cartocdn.com</code>.</p>
+				</section>
+				<section data-background="#0090D7">
+					<p>This next set of code is styling the html page, body and map so it fits in the full screen.</p>
+					<pre><code>
+<style>
+  html, body, #map {
+    height: 100%;
+    width:  100%;
+    padding: 0;
+    margin: 0;
+  }
+</style>
+
+</pre></code>
+				</section>
+
+				<section data-background="#0090D7">
+					<p>And here we have some JavaScript that is calling <em>createVis</em> from the <strong>CartoDB</strong> Javascript Library and is referencing a <strong>JSON</strong> file from my user account at CartoDB.com</p>
+<pre><code><script>
+window.onload = function() {
+  cartodb.createVis('map', 'https://cartodbacademy.cartodb.com/api/v2/viz/ab345438-f185-11e3-80b8-0e73339ffa50/viz.json');
+}
+</script>
+</pre></code>
+					<p>We're going to get back to this bit of code very shortly.</p>
+				</section>
+
+				<section data-background="#0090D7">
+					<p>Finally, we call up the <strong>map</strong> in a <code>div
+					</code> and close out the <code>html</code> file.</p>
+					<pre><code><div id="map"></div></pre></code> 
+				</section> 
+
+				<section>
+					<p>Now one thing that is really bugging me about how this map viz is rendering is that it seems off-centered.</p>
+					<p>We can learn more about the map's settings from the <strong>viz.json</strong> file we saw in the JavaScript code earlier.</p>
+					<p><a href="https://cartodbacademy.cartodb.com/api/v2/viz/ab345438-f185-11e3-80b8-0e73339ffa50/viz.json" target="_blank">Let's check this JSON out!</a>
+				</section>
+				<section>
+					<p>The JSON file for a map vizualization can be found from click the <strong>PUBLISH</strong> button in the CartoDB web interface.</p>
+
+<img data-src="img/publish_map.png" style="background:none; border:none; box-shadow:none; width:600px;">
+				</section>
+				<section>
+					<img data-src="img/publish_map.png" style="background:none; border:none; box-shadow:none; width:600px;">
+
+					<p>We can publish the map:
+						<li>as a link to a webpage</li>
+						<li>as an <code>html</code> iframe</li>
+						<li>or by using the <strong>CartoDB.js</strong> JavaScript library</li>
+					</p>
+				</section>
+				<section data-background="#0090D7">
+					<p>Now I want to repurpose the map center from this:</p>
+<pre><code>"center":"[40.687407052121316, -73.87310028076172]"</pre></code>
+					<p>To these coordinates:</p>
+<pre><code>40.7127, -74.0059</pre></code>
+					<p>I'll refer to some code examples from <a href="http://academy.cartodb.com/courses/cartodbjs-ground-up/createvis-vs-createlayer/#createvis" target='_blank'>CartoDB Academy: createVis vs. createLayer</a> 
+				</section>
+
+				<section data-background="#0090D7">
+
+					<p>It appears that I can edit some options for the <strong>createVis</strong>.</p>
+<pre><code><script>
+window.onload = function() {
+  cartodb.createVis('map', 'https://cartodbacademy.cartodb.com/api/v2/viz/ab345438-f185-11e3-80b8-0e73339ffa50/viz.json', 
+  	{ 
+	center: [40.7127, -74.0059], 
+        });
+}
+</script>
+</pre></code>
+					<p>Save the html file, refresh my page and <a href='http://localhost:8000/map/tutorial-1/index_complete.html' target='_blank'>it appears to work</a>.</p>
+				</section>
+
+				<section data-background="#0090D7">
+					<p>Try messing around with the <strong>zoom</strong> settings: <pre><code>zoom: 17,</pre></code>
+				</section>
+
+				<section>
+					<p>Now thinking about what we just did, setting the map frame settings and interacting with the map view is a lot like setting the <strong>Data Frame and Layers</strong> properties in a conventional desktop GIS environment.</p>
+				</section>
+				<section>
+					<p>You can actually update a lot of the <strong>viz.json</strong>, just by using the CartoDB web interface and doing things like panning and zooming and adjusting the settings.</p>
+					<img data-src="img/cartodb_map_interface.png" style="background:none; border:none; box-shadow:none; width:600px;">
+				</section>
+					
+				<section data-background="#0090D7">
+					<img data-src="img/cartodb_map_interface.png" style="background:none; border:none; box-shadow:none; width:600px;">
+					<p>While the idea of <em>coding</em> it all out seems like a step backward in technology, it actually allows the web mapping designer to customize their maps and mapping applications.</p>
+				</section>
+
+				<section>
+					<h1>Quick Summary</h1>
+					<li>1. Reviewed the tutorial-1 index.html file</li>
+					<li>2. Inspected a CartoDB viz.json file</li>
+					<li>3. Modified JavaScript map settings in cartodb.createVis</li>
+					<li>4. Modified the map zoom settings</li>
+					<li>5. Considered coding vs. point-and-click</li>
+				</section>
+
+				<section data-background="#0090D7">
+					
+					<p>TEST</p>
+				</section>
+				<section data-background="#0090D7">
+
+					<p>TEST</p>
+				</section>
+
+
+
+
+
+
+
+
+
+
+
+
+				<section data-background="#0090D7">
+					<p>Now if you don't have a <a href='https://cartodb.com/' target='_blank'>CartoDB</a> account, create one now.</p>
+					<p>If you do, log in to your account.</p>
+				</section>
+
+
+
+
+
+
+
+
+				<section data-background="#0090D7">
+					<p>If you do, log in and go to <code>https://YOUR_USERNAME.cartodb.com/your_apps</code></p>
+				</section>
 
 				<section>
 					<p>
@@ -106,6 +330,7 @@
 					<img data-src="http://docs.cartodb.com/img/icons/importapi.786876b4.png" style="background:none; border:none; box-shadow:none;">
 					</br>...using <a href="https://gist.github.com/andrewxhill/093c89fa45e5f657fec7#file-cartodb-utils-py" target='_blank'>cartodb-utils.py</a></p>
 				</section>
+
 <section>
 <p>Drop any single shapefile in the </br><pre><code>cartodb_demo/data/*your_shapefile*.shp</code></pre>folder</p>
 </section>
@@ -174,214 +399,7 @@ os.system(impCMD)</code></pre>
 
 
 
-				<section data-background="#0090D7"> 
-					<h2>Multipath Error</h2>
-					<img data-src="img/errordiagram.jpg" alt="error diagram">
-				</section>
-
-				<section> 
-					<p>Although the error associated with these split second delays may seem negligible, the multipath phenomena can substantially impact positional accuracy and tracking measurements.</p>
-				</section>
-				<section  > 
-					<img data-src="img/taxi.jpg" alt="taxi" height='40%' width='40%'>
-					<p class="fragment highlight-blue">In order to evaluate the associations between urban density and GPS positional accuracy we used data from the New York City (NYC) Taxi and Limousine Commission containing information on the approximately 175 million NYC yellowcab taxi trips that occurred in 2013.</p>
-					
-				</section>
-
-				<section> 
-					<p>We hypothesized that higher building density would be positively associated with errors in accuracy.</p>
-				</section>
-
-				<!-- DANNY'S SECTION
-
-				<section data-background="#dddddd"> 
-					<p>My research group, <a href='http://beh.columbia.edu/' target='_blank'>the Built Environment and Health Project</a> has been using and seeing GPS and accelerometry data emerging in many health-related research studies.</p>
-				</section>
-
-				<section> 
-					<p>We've noticed a lot of error in areas with high building density. So we've been sending students out on structured walks to better assess how the built environment influences GPS signal.</p>
-				</section>
-
-				<section> 
-					<p>In two slides, we'll see two walks down two different streets (one with low and one with high built density) in NYC (Bronx and Midtown Manhattan).</p>
-				</section>				
-
-				<section> 
-					<p>Two students walked together each carrying two <a href='http://usglobalsat.com/p-25-dg-100-gpsdata-logger.aspx' target='_blank'>DG-100 GPS</a> devices and the <a href='http://runkeeper.com/' target='_blank'>RunKeeper</a> app on their smartphones.</p>
-
-					<img data-src="img/dg100.jpg" alt="gps device">
-				</section>
-
-				<section> 
-					<img data-src="img/gps_map_v02.png" alt="gps map">
-				</section>
-
-				<section> 
-					<p>If researchers were assessing walking or traveled distance by using the raw un-processed GPS data they could potentially overestimate distance traveled in areas of high multipath error.</p>
-				</section>	
-
-				<section> 
-					<p>We've sent students on about 40 different walks stratified by the upper and lower quartiles of <strong>distributed building height</strong> (explained in later slides) and are planning on putting out some documentation providing recommendations on using GPS data for public health research and how folks should plan on using some GPS cleaning/snapping methods.</p>
-				</section>
-
-				<section> 
-					<p>The Taxi pickup and dropoff GPS data appeared to have the same error.</p>
-				</section>
-
-				<section> 
-					<p>So it seemed worthwhile and exciting to investigate it and potentially our REDS group's analysis to guide further research.</p>
-				</section>
-
-				<section> 
-					<p><small>A map of all dropoff and pickup GPS points in 2013 (starts of trips in blue and the ends in orange on this map:) <a href='https://www.mapbox.com/blog/nyc-taxi/' target='_blank'>New York City taxi trips - Eric Fisher, Mapbox</a>. Note points in water and over where buildings are.</small></p>
-					<iframe width="100%" height="500px" frameBorder="0" src="https://a.tiles.mapbox.com/v3/enf.ij1c2o4h.html?secure"></iframe>
-				</section>
-
-				<section>
-					<h4>Taxi Pickups and Dropoffs by Census Block</h4>
-					<iframe width='100%' height='525' frameborder='0' src='https://dms2203.cartodb.com/viz/7631a2b4-ed1e-11e4-8d21-0e018d66dc29/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe> 
-					<p><small><a href='http://nbviewer.ipython.org/github/nygeog/taxi/blob/master/tasks/201504_stat4701/03-csv-xy-intersect.ipynb' target='_blank'>iPython notebook to intersect the Census Blocks and Taxi Pickups and Dropoffs</a>, <a href='http://nbviewer.ipython.org/github/nygeog/taxi/blob/master/tasks/201504_stat4701/04-ogr-shp-to-csv.ipynb' target='_blank'>shapefile to csv (GDAL/OGR)</a>, <a href='http://nbviewer.ipython.org/github/nygeog/taxi/blob/master/tasks/201504_stat4701/05-combine-tables.ipynb' target='_blank'>combine tables </a>, and <a href='http://nbviewer.ipython.org/github/nygeog/taxi/blob/master/tasks/201504_stat4701/06-concat-master.ipynb' target='_blank'> concat master table.</a>
-					</small></p>
-				</section>
-
-				<section> 
-					<p>We hypothesized that higher building density (<strong>Distributed Building Height</strong>) would be positively associated with errors in accuracy.</p>
-				</section>
-
-				<section>
-					<h1>Modeling Buildings...</h1>
-				</section>
-
-				<section>
-					<h2>Data</h2>
-					<ul>
-						<li><a href='https://data.cityofnewyork.us/Housing-Development/Building-Footprints/tb92-6tj8' target='_blank'>NYC Building Footprints</a> 2013-09 release with Roof Height and Ground Elevation - these attributes are no longer available via Open Data - that's why its important to archive data.</li>
-					  	<li><a href='http://www.nyc.gov/html/dcp/download/bytes/nycb2010_15a.zip' target='_blank'>NYC Census Blocks 2010</a> (I used v. 11a)</li>
-					</ul>
-				</section>
-
-				<section>
-					<h2>Assumptions and Limitations</h2>
-					<ul>
-						<li>All data used is publicly available.</li>
-					  	<li>Buildings are extruded from the ground elevation to maximum height - building setbacks are not modeled with publicly available data.</li>
-					</ul>
-				</section>
-
-				<section> 
-					<h4>Distributed Building Height MODEL</h4>
-					<small><pre><code>convert -delay 200 -loop 0 img/png/*.png img/gif/dist_bldg_hght_ani.gif #imagemagick-png to gif code</code></pre></small>
-					<img data-src="img/dist_bldg_hght_ani.gif" alt="dist_bldg_hght_ani" height='75%' width='75%'>
-				</section>
-				<!-- Distributed Building Height -->
-				<section> 
-					<h4>Distributed Building Height</h4>
-					<iframe width='100%' height='525' frameborder='0' src='https://dms2203.cartodb.com/viz/ac88b602-ed20-11e4-aad3-0e018d66dc29/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
-					<p><small><a href='https://github.com/nygeog/taxi/tree/master/tasks/201406_building_bulk_density' target='_blank'>Calculating Distributed Building Height (referred to as building bulk density in code).</a></small></p>
-				</section>
-
-
-				<section>
-					<h1>Modeling GPS Error...</h1>
-				</section>
-
-				<section>
-					<h2>Data</h2>
-					<ul>
-						<li><a href='https://data.cityofnewyork.us/City-Government/Roadbed/xgwd-7vhd' target='_blank'>NYC Roadbed Data</a></li>
-					  	<li><a href='http://chriswhong.com/open-data/foil_nyc_taxi/' target='_blank'>2013 Taxi Data: Trip and Fare Data</a></li>
-					</ul>
-				</section>
-
-				<section>
-					<h2>Assumptions and Limitations</h2>
-					<ul>
-						<li>We don't know the 'truth' of where a Taxi Pickup/Dropoff occurred.</li>
-						<li>Assume that a Taxi Pickup/Dropoff that occurred on Roadbed was valid, meaning a pickup on 42nd Street didn't actually occur on 43rd Street.</li>
-					  	<li>Taxi's can only pick up on the Roadbed data layer.</li>
-					</ul>
-				</section>
-
-				<section> 
-					<h4>Taxi Pickups/Dropoffs Roadbed Diagram</h4>
-					<img data-src="img/roadbed_diagram.jpg" alt="roadbed diagram" width='50%' height='50%' >
-				</section>
-
-				<section> 
-					<h4>Taxi Pickup/Dropoffs 2013/01/01 distance to roadbed </h4>
-					<img data-src="img/midtown_20130101.png" alt="roadbed diagram" width='60%' height='60%' >
-					<img data-src="img/midtown_20130101_legend.png" alt="roadbed diagram" width='25%' height='25%'>
-				</section>
-
-				<!-- Average Distance to Roadbed -->
-				<section> 
-					<h4>Average Distance to Roadbed</h4>
-					<iframe width='100%' height='525' frameborder='0' src='https://dms2203.cartodb.com/viz/717d07aa-ed22-11e4-95d1-0e9d821ea90d/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
-					<p><small><a href='https://github.com/nygeog/taxi/tree/master/tasks/201409_roadbed_centerline' target='_blank'>Calculating Distance (<code>arcpy.GenerateNearTable_analysis</code>) from Pickup/Dropoffs to Nearest Roadbed feature</a>, <a href='https://github.com/nygeog/taxi/tree/master/tasks/201504_stat4701' target='_blank'>OGR-GDAL and Pandas IPython Notebooks for Data Munging.</a></small></p>
-				</section>
-
-				<!-- Standard Deviation Distance to Roadbed -->
-<!-- 				<section>
-					<iframe width='100%' height='550' frameborder='0' src='https://dms2203.cartodb.com/viz/c0aa7254-ed22-11e4-8203-0e9d821ea90d/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
-				</section> -->
-
-				<!-- Percent Block Covered with Building Footprint -->
-				<section> 
-					<h4>Percent Block Covered with Building Footprint</h4>
-					<iframe width='100%' height='525' frameborder='0' src='https://dms2203.cartodb.com/viz/afdd200a-ed5b-11e4-8727-0e018d66dc29/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
-					<p><small><a href='https://github.com/nygeog/taxi/tree/master/tasks/201504_stat4701' target='_blank'>OGR-GDAL and Pandas IPython Notebooks includes creating Percent Block Covered with Building Footprint variable.</a></small></p>
-				</section>
-
-				<section>
-					<h2>The Analytical Datasets</h2>
-					<p><i>Summary Statistics for Census Blocks</i></p>
-					<p>nycb2010_taxi_2013_stats_bldg_cnt_pctcbbldg.csv (4 MB)</p>
-
-					<p><i>Distance to Roadbed data for all 2013 Taxi Pickups/Dropoffs</i></p>
-					<p>taxi_2013.csv (18.56 GB - OSX-journaled)</p>
-				</section>
-
-				<section>
-					<h4>Hosted them on Google BigQuery</h4>
-					<img data-src="img/bigquery_logo.png" alt="bigquery logo">
-					<img data-src="img/bigquery_console.png" alt="bigquery console">
-				</section>
-
-				<section>
-					<h2>Variables for all 2013 Taxi Pickups/Dropoffs</h2>
-					<small><ul>
-						<li>tuid - Unique Taxi trip ID.</li>
-						<li>dist_roadbed - distance to nearest roadbed, 0 is in roadbed.</li>
-						<li>geoid - Unique Census Block ID.</li>
-						<li>dist_bldg_hght - Distributed building height (meters), our predictor for causing error.</li>
-						<li>type - p: pickup, d: dropoff location</li>
-					</ul></small>
-				</section>
-				<section> 
-					<img data-src="img/bigquery_results_taxi.png" alt="bigquery results taxi">
-				</section>
-
-				<section>
-					<h2>Variables for Census Blocks</h2>
-					<small><ul>
-						<li>geoid - Unique Census Block ID</li>
-						<li>avgbrdist - Average Distance from Roadbed for taxi pickup and dropoff observations for 2013 in Census Block.</li>
-						<li>medbrdist - Median Distance from Roadbed for taxi pickup and dropoff observations for 2013 in Census Block.</li> 
-						<li>stdbrdist - Standard Deviation of Distance from Roadbed for taxi pickup and dropoff observations for 2013 in Census Block.</li> 
-						<li>count - Count taxi pickup and dropoff observations for 2013 in Census Block.</li> 
-						<li>areasqft - Area of Census Block in square feet.</li> 
-						<li>countbldg - Count of Buildings in Census Block.</li>  
-						<li>bldgareaft - Building footprint area in square feet in Census Block.</li>
-						<li>pctcbbldg - Percent Census Block covered by building footprint.</li>
-						<li>dist_bldg_hght - Distributed building height (meters), our predictor for causing error.</li>
-					</ul></small>
-				</section>
-				<section> 
-					<img data-src="img/bigquery_results_blocks.png" alt="bigquery results blocks">
-				</section>
-				<section data-background="#dddddd"> 
-					<h1>The Statistical Analysis</h1>
-				</section>
+				
 
 				
 				
