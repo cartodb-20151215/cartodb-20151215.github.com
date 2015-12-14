@@ -55,7 +55,7 @@
 				<section data-background="#0090D7">
 					<h2>Today we'll go over...</h2><h4>
 					<li>Creating Your First Web Map, editing JavaScript</li>
-					<li>From Shapefile to CartoDB</li>
+					<li>Quick Shapefile import to CartoDB</li>
 					<li>Geoprocessing with CartoDB</li></h4>
 				</section>
 
@@ -100,11 +100,21 @@
 					CartoCSS
 					<img data-src="http://docs.cartodb.com/img/icons/cartocss.df9e50f3.png" style="background:none; border:none; box-shadow:none;"></p>
 				</section>
+
+				<section data-background="#0090D7">
+				<p>With a PostGIS backend!</p>
+				<img data-src="https://upload.wikimedia.org/wikipedia/en/6/60/PostGIS_logo.png" style="background:none; border:none; box-shadow:none; width:400px;">
+				</section>
+
 				<section data-background="#0090D7">
 					<p>And a lot of </br> <img data-src="http://pngimg.com/upload/heart_PNG706.png" style="background:none; border:none; box-shadow:none; width:400px;"> </br> for Open Source Software</p>
 
 				</section>
-				
+				<section data-background="#0090D7">
+					<h2>Let's kick off with...</h2><h4>
+					<li>Creating Your First Web Map, editing JavaScript</li>
+					</h4>
+				</section>
 				<section>
 					<h4>Before we get started...</h4>
 					<p>Let's install a text editor.</br><a href='http://www.sublimetext.com/2'>
@@ -288,6 +298,104 @@ window.onload = function() {
 				</section>
 
 				<section data-background="#0090D7">
+					<h2>Unless there's any questions, let's move on to...</h2><h4>
+					<li>Quick Shapefile import to CartoDB</li></h4>
+				</section>
+
+				<section data-background="#0090D7">
+					<p>Importing shapefiles is super easy with the CartoDB web interface.</p>
+					<img data-src="http://docs.cartodb.com/img/layout/common/new_dataset_button.e6869121.jpg" style="background:none; border:none; box-shadow:none; width:450px;">
+				</section>
+
+				<section data-background="#0090D7">
+					<a href="http://docs.cartodb.com/tutorials/import_shapefile_in_cartodb/" target='_blank'><h3>Importing ShapeFiles into CartoDB</h3></a>
+
+					<small>CartoDB requires that you create a .ZIP file containing the .SHP, .DBF, .SHX and .PRJ files, all prefixed with same name (while not required, this is a suggested best practice).</small>
+
+					<pre><code>For example, a ne_10m_populated_places.zip zip file contains;
+
+ne_10m_populated_places.shp, 
+ne_10m_populated_places.dbf, 
+ne_10m_populated_places.shx, 
+and ne_10m_populated_places.prj</code></pre>
+				
+
+				<a href="http://docs.cartodb.com/tutorials/import_shapefile_in_cartodb/" target='_blank'><p>Learn more about Importing Shapefiles from the official CartoDB documentation.</p></a>
+				</section>
+
+<section>
+	<p>Let's upload the playgrounds file to your CartoDB account</p>
+<img data-src="img/upload_playgrounds.png" style="background:none; border:none; box-shadow:none; width:450px;">
+</section>
+
+				<section data-background="#0090D7">
+					<p>However,...</p>
+					<p>...in order to better familiarize ourselves with the more advanced features of the CartoDB platform, we're going to leverage some Python code and the Import API!</p>
+				</section>
+
+
+
+				<section data-background="#0090D7">
+					<p>Now if you don't have a <a href='https://cartodb.com/' target='_blank'>CartoDB</a> account, create one now.</p>
+					<p>If you do, log in to your account.</p>
+					<a href='https://cartodb.com/' target='_blank'><img data-src="img/cartodb_login.png" style="background:none; border:none; box-shadow:none; height:400px;"></a>
+				</section>
+
+
+
+
+
+
+
+
+				<section data-background="#0090D7">
+					<p>Once logged in, go to <code>https://YOUR_USERNAME.cartodb.com/your_apps</code></p>
+				</section>
+
+				<section data-background="#0090D7">
+					<p>Copy the API key from the box like the one below</p>
+					<img src="img/cartodb_api_key.png" style="background:none; border:none; box-shadow:none;">
+					<p>Be careful with this code, don't share it, or put it on your public GitHub account</p>
+				</section>
+				<section>
+					<p>
+					</br>
+					Import API
+					<img data-src="http://docs.cartodb.com/img/icons/importapi.786876b4.png" style="background:none; border:none; box-shadow:none;">
+					</br>...using <a href="https://gist.github.com/andrewxhill/093c89fa45e5f657fec7#file-cartodb-utils-py" target='_blank'>cartodb-utils.py</a></p>
+				</section>
+
+<section>
+<p>Drop any single shapefile in the </br><pre><code>cartodb_demo-master/data/*your_shapefile*.shp</code></pre>folder</p>
+</section>
+<section>
+<p>Check the <pre><code>cartodb_demo-master/_sample_data</code></pre> folder if you need a shapefile to use.</p>
+</section>
+		
+<section>
+	<p>Now we can run the following code...</p>
+	<p>Which will:</p>
+	<li>1. Find any <code>.shp</code> filenames</li>
+	<li>2. Zip the <code>.shp</code> and any associated files</li>
+	<li>3. And then upload to your CartoDB account!</li>
+</section>
+
+<section>
+<script src="https://gist.github.com/nygeog/58208e3db5750927cb79.js"></script>
+</section>
+
+<section>
+	<small>The Shapefile should now be a table in your CartoDB account</small>
+	<img data-src="img/uhf_table.png" style="background:none; border:none; box-shadow:none;">
+</section>
+
+
+<!-- 
+
+
+ -->
+
+				<section data-background="#0090D7">
 					
 					<p>TEST</p>
 				</section>
@@ -299,79 +407,6 @@ window.onload = function() {
 
 
 
-
-
-
-
-
-
-
-
-				<section data-background="#0090D7">
-					<p>Now if you don't have a <a href='https://cartodb.com/' target='_blank'>CartoDB</a> account, create one now.</p>
-					<p>If you do, log in to your account.</p>
-				</section>
-
-
-
-
-
-
-
-
-				<section data-background="#0090D7">
-					<p>If you do, log in and go to <code>https://YOUR_USERNAME.cartodb.com/your_apps</code></p>
-				</section>
-
-				<section>
-					<p>
-					</br>
-					Import API
-					<img data-src="http://docs.cartodb.com/img/icons/importapi.786876b4.png" style="background:none; border:none; box-shadow:none;">
-					</br>...using <a href="https://gist.github.com/andrewxhill/093c89fa45e5f657fec7#file-cartodb-utils-py" target='_blank'>cartodb-utils.py</a></p>
-				</section>
-
-<section>
-<p>Drop any single shapefile in the </br><pre><code>cartodb_demo/data/*your_shapefile*.shp</code></pre>folder</p>
-</section>
-				
-<section>
-<script src="https://gist.github.com/nygeog/58208e3db5750927cb79.js"></script>
-</section>
-
-<section>
-<pre><code data-trim>import os
-import zipfile
-import glob
-import _secret_info
-
-cdbU = _secret_info.cartoDBusername
-cdbK = _secret_info.cartoDBapikey
-
-shpFolder  = 'data'
-
-theSHP     = [os.path.basename(x) for x in glob.glob(shpFolder+'/*.shp')][0] # find filename of any file in folder w/ .shp using glob
-theSHPname = theSHP.replace('.shp','')
-
-def zipYourSHP(src, dst):
-    zf = zipfile.ZipFile("%s.zip" % (dst), "w", zipfile.ZIP_DEFLATED)
-    abs_src = os.path.abspath(src)
-    for dirname, subdirs, files in os.walk(src):
-        for filename in files:
-            absname = os.path.abspath(os.path.join(dirname, filename))
-            arcname = absname[len(abs_src) + 1:]
-            print 'zipping %s as %s' % (os.path.join(dirname, filename),
-                                        arcname)
-            zf.write(absname, arcname)
-    zf.close()
-
-print theSHPname, ' ...is the name of your shapefile.'
-
-zipYourSHP(shpFolder, 'data_to_cdb')
-
-impCMD = "python cartodb-utils.py import -f data_to_cdb.zip -k "+cdbK+" -u  "+cdbU
-os.system(impCMD)</code></pre>
-</section>
 
 				<section data-background="#0090D7">
 					Rolling Stones tour map
@@ -395,15 +430,30 @@ os.system(impCMD)</code></pre>
 
 					Python, nightly backups of all your data tables. 
 				</section>
-
-
-
-
-				
-
-				
-				
 			</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 		</div>
 
