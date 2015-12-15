@@ -108,7 +108,8 @@
 				</section>
 
 				<section data-background="#0090D7">
-					<p>And a lot of </br> <img data-src="http://pngimg.com/upload/heart_PNG706.png" style="background:none; border:none; box-shadow:none; width:400px;"> </br> for Open Source Software</p>
+					<p>And a lot of </br> <img data-src="http://pngimg.com/upload/heart_PNG706.png" style="background:none; border:none; box-shadow:none; width:400px;"> </br> for Open Source Software.</p>
+					<p><a href='https://github.com/CartoDB/cartodb' target='_blank'>CartoDB on GitHub</a>
 
 				</section>
 				<section data-background="#0090D7">
@@ -136,6 +137,7 @@
 				</section>
 
 				<section>
+					<h3>Change Directory</h3>
 					<p>Now let's <a href="http://guides.macrumors.com/cd" target="_blank">change directory</a> to our files.</p>
 					<pre><code>$ cd your/path/to/cartodb_demo-master</pre></code>
 					<p>The above code may need to look something like this, if you downloaded the folder to your desktop:</p>
@@ -144,6 +146,7 @@
 				</section>
 
 				<section>
+					<h3>Launch Server</h3>
 				<p>Paste this code...</p>
 				<pre><code>python -m SimpleHTTPServer 8000</pre></code>
 				<p>...into your terminal. Hit return to fire up this local server.</p>
@@ -165,28 +168,33 @@
 					<p>...into your browser</p>
 				</section> 
 				<section>
-					<p>Your are now running a web server and serving up <code>html</code> files.</p>
+					<p>Your are now running a local web server and serving up <code>html</code> files.</p>
 				</section> 
 				<section>
+					<h3>HTML</h3>
 				<p>You're seeing a file named: <code>index.html</code>. Serving up an <code>html</code> file with source code that looks like this:</p>
 				<pre><code><h1>List of links</h1>
 <li><a href='../map/tutorial-1'>Link to Map 1</a></li>
 </pre></code>
 				</section>
 				<section>
-					<p>Now this may seem like a lot of new information and steps, but it will soon be second nature.</p>
+					<h3>New Skills</h3>
+					<p>Now this may seem like a lot of new information and steps (using Terminal commands, etc.), but it will soon be second nature.</p>
 				</section>
 
 				<section>
-					<a href='http://localhost:8000/map/tutorial-1/' target='_blank'>Let's check out and work with our first map (click here).</a>
+					<h3>Serving up a Map</h3></br>
+					<a href='http://localhost:8000/map/tutorial-1/' target='_blank'>Let's check out and work with our first map (click here).</a></br></br><p>This map is served by our local SimpleHTTPServer.</p>
 				</section>
 
 				<section data-background="#0090D7">
+					<h3>HTML in Text Editor</h3>
 					Now, in <em>Sublime Text</em>, let's open the <code>index.html</code> file located here:
 					<pre><code>cartodb_demo/map/tutorial-1/index.html</pre></code>
 				</section>
 
 				<section data-background="#0090D7">
+					<h3>Reviewing HTML</h3>
 					<p>Okay, so lets see the first few bits of code</p>
 					<pre><code>
 
@@ -199,6 +207,7 @@
 				JavaScript from <code>libs.cartocdn.com</code>.</p>
 				</section>
 				<section data-background="#0090D7">
+					<h3>Some <a href='http://www.w3schools.com/css/' target='_blank'>CSS</a></h3>
 					<p>This next set of code is styling the html page, body and map so it fits in the full screen.</p>
 					<pre><code>
 <style>
@@ -214,6 +223,7 @@
 				</section>
 
 				<section data-background="#0090D7">
+					<h3>JavaScript</h3>
 					<p>And here we have some JavaScript that is calling <em>createVis</em> from the <strong>CartoDB</strong> Javascript Library and is referencing a <strong>JSON</strong> file from my user account at CartoDB.com</p>
 <pre><code><script>
 window.onload = function() {
@@ -225,12 +235,14 @@ window.onload = function() {
 				</section>
 
 				<section data-background="#0090D7">
+					<h3>Map in a div</h3>
 					<p>Finally, we call up the <strong>map</strong> in a <code>div
 					</code> and close out the <code>html</code> file.</p>
 					<pre><code><div id="map"></div></pre></code> 
 				</section> 
 
 				<section>
+					<h3>Off Center, Review viz.json</h3>
 					<p>Now one thing that is really bugging me about how this map viz is rendering is that it seems off-centered.</p>
 					<p>We can learn more about the map's settings from the <strong>viz.json</strong> file we saw in the JavaScript code earlier.</p>
 					<p><a href="https://cartodbacademy.cartodb.com/api/v2/viz/ab345438-f185-11e3-80b8-0e73339ffa50/viz.json" target="_blank">Let's check this JSON out!</a>
@@ -241,6 +253,7 @@ window.onload = function() {
 <img data-src="img/publish_map.png" style="background:none; border:none; box-shadow:none; width:600px;">
 				</section>
 				<section>
+					<h3>Map Publishing from CartoDB</h3>
 					<img data-src="img/publish_map.png" style="background:none; border:none; box-shadow:none; width:600px;">
 
 					<p>We can publish the map:
@@ -250,6 +263,7 @@ window.onload = function() {
 					</p>
 				</section>
 				<section data-background="#0090D7">
+					<h3>New Map Center Coords</h3>
 					<p>Now I want to repurpose the map center from this:</p>
 <pre><code>"center":"[40.687407052121316, -73.87310028076172]"</pre></code>
 					<p>To these coordinates:</p>
@@ -258,7 +272,7 @@ window.onload = function() {
 				</section>
 
 				<section data-background="#0090D7">
-
+					<h3>Edit cartodb.createVis</h3>
 					<p>It appears that I can edit some options for the <strong>createVis</strong>.</p>
 <pre><code><script>
 window.onload = function() {
@@ -285,10 +299,12 @@ window.onload = function() {
 				</section>
 					
 				<section data-background="#0090D7">
+					<h3>Coding vs. Panning</h3>
 					<img data-src="img/cartodb_map_interface.png" style="background:none; border:none; box-shadow:none; width:600px;">
 					<p>While the idea of <em>coding</em> it all out seems like a step backward in technology, it actually allows the web mapping designer to customize their maps and mapping applications.</p>
 				</section>
 <section data-background="#0090D7">
+	<h3>createViz Arguments</h3>
 	<p>The map designer can set many map options. Check out the <a href='http://docs.cartodb.com/cartodb-platform/cartodb-js/api-methods/#cartodbcreatevis' target='_blank'>cartodb.createVis Arguments.</a></p>
 <pre><code>cartodb.createVis('map', 'https://dms8md23.cartodb.com/api/v2/viz/e11893e4-88c8-11e5-8791-0ecfd53eb7d3/viz.json', {
             title: false,
@@ -327,6 +343,7 @@ window.onload = function() {
 
 
 				<section data-background="#0090D7">
+					<h3>User Location</h3>
 					<p>A script to detect User Location (which will be called after the map loads)</p>
 <pre><code>var map;  // credit: http://html5doctor.com/finding-your-position-with-geolocation/
 	function detectUserLocation(){
@@ -352,7 +369,8 @@ window.onload = function() {
 	}</pre></code>	
               </section>			
 				<section data-background="#0090D7">
-					<p>Load up the map, detect User Location...</p>
+					<h3>Load Map, detect User Location</h3>
+					<!-- <p>Load up the map, detect User Location...</p> -->
 <pre><code>function main() {
         cartodb.createVis('map', 'https://dms8md23.cartodb.com/api/v2/viz/e11893e4-88c8-11e5-8791-0ecfd53eb7d3/viz.json', {
             title: false,
@@ -392,6 +410,7 @@ window.onload = function() {
 
 
 <section data-background="#0090D7">
+	<h3>New Coords, SQL</h3>
 					<p>Get the new coords to re-center to User Location;</p>
 					<p>Then Query (with SQL) the CartoDB common-data account;</p>
 <pre><code>function mapToPosition(position) {
@@ -432,6 +451,7 @@ mapToPosition();</pre></code>
               </section>	
 
 <section data-background="#0090D7">
+					<h3>SQL</h3>
 					<p>This SQL query asks the CartoDB common-data account, what Census Tract <strong>Intersects</strong> with our Latitude, Longitude coords from the User Location, and gets it returned as <strong>GeoJSON</strong>.</p>
 					
 <pre><code>var jsonURL = "https://common-data.cartodb.com/api/v2/sql?q=select 
@@ -441,6 +461,7 @@ mapToPosition();</pre></code>
               </section>	
 
 <section data-background="#0090D7">
+					<h3>API interaction</h3>
 					<p>Now we want to grab elements from that JSON file and construct a call to the US Census API for Total Population (for the tract), using the Census Tract ID from the SQL query against common-data;</p>
 <pre><code>$.getJSON(jsonURL, function(data) {
              $.each(data.rows, function(i, f) {
@@ -455,7 +476,8 @@ mapToPosition();</pre></code>
 
 
 <section data-background="#0090D7">
-					<p>And with our User Location Latitude, Longitude as the new center and new CircleMarker, we're grabbing the US Census API Data and adding it and other info to a Pop Up window.</p>
+					<h3>CircleMarker, PopUp Window</h3>
+					<p>And with our User Location Latitude, Longitude as the new center and new CircleMarker, we're grabbing the US Census API Data and adding it and other info to a PopUp window.</p>
 <pre><code>$.getJSON(cenURL, function(data) {
           var cenVar = data;
                 
@@ -479,11 +501,11 @@ mapToPosition();</pre></code>
 
 
               <section data-background="#0090D7">
-              	<p>So the key <strong>SQL</strong> function we are using is <strong>ST_Intersects</strong> <a href='http://postgis.net/docs/ST_Intersects.html' target='_blank'>(PostGIS documentation) </a>.</p>
+              	<p>So the key <strong>SQL</strong> function we are using is <strong>ST_Intersects</strong>.</p>
 
-              	<p>And what's cool about that is we're doing it in the URL via CartoDB SQL API. First with the URL,</br>
+              	<p>With a URL via CartoDB SQL API. First with the URL,</br>
               <pre><code>https://common-data.cartodb.com/api/v2/sql?q=</pre></code></p>
-<p>the SQL query,</p>
+<p>the SQL query <a href='http://postgis.net/docs/ST_Intersects.html' target='_blank'>(ST_Intersects PostGIS documentation)</a>,</p>
 <pre><code>geoid FROM public.tl_2014_census_tracts 
 WHERE ST_INTERSECTS(the_geom,st_GeomFromText('POINT("+lon+" "+lat+")'
 , 4326)
@@ -497,7 +519,8 @@ WHERE ST_INTERSECTS(the_geom,st_GeomFromText('POINT("+lon+" "+lat+")'
 </section>
 
 <section data-background="#0090D7">
-<p>This is what is so exciting about CartoDB, the user can send SQL tasks up to the PostGIS databases.</p></br></br>
+<h3>SQL via URL</h3>
+<p>This is what is so exciting about CartoDB, the user can send SQL tasks up to the PostGIS databases.</p></br>
 <p>And throughout the CartoDB platform, we can access and create map data, display it, and modify and geoprocess with the SQL API.</p>
 </section>
 
@@ -514,7 +537,13 @@ WHERE ST_INTERSECTS(the_geom,st_GeomFromText('POINT("+lon+" "+lat+")'
 </section>
 
 <section data-background="#0090D7">
-<p><em>Less work for everyone.</em></br></br>All while exposing your organization to a super rich <strong>Geographic Information System.</strong></br></br>That leverages the scalability of <em>the Cloud</em>.</p>
+<p><em>Less work for everyone.</em></p>
+</section>
+<section data-background="#0090D7">
+	<p>All while exposing your organization to a super rich <strong>Geographic Information System.</strong></p>
+</section>
+<section data-background="#0090D7">
+<p>That leverages the scalability of <em>the Cloud</em>.</p>
 </section>
 
 
@@ -540,6 +569,7 @@ WHERE ST_INTERSECTS(the_geom,st_GeomFromText('POINT("+lon+" "+lat+")'
 				</section>
 
 				<section data-background="#0090D7">
+					<h3>Import Data</h3>
 					<p>Importing shapefiles is super easy with the CartoDB web interface.</p>
 					<img data-src="http://docs.cartodb.com/img/layout/common/new_dataset_button.e6869121.jpg" style="background:none; border:none; box-shadow:none; width:450px;">
 				</section>
@@ -573,7 +603,7 @@ and ne_10m_populated_places.prj</code></pre>
 
 				<section data-background="#0090D7">
 					<p>Once completed,...</p>
-					<p>...let's leverage some Python code and the Import API to import another peice of data!</p>
+					<p>...let's leverage some Python code and the Import API to import another piece of data!</p>
 				</section>
 				
 
@@ -583,6 +613,7 @@ and ne_10m_populated_places.prj</code></pre>
 				</section>
 
 				<section data-background="#0090D7">
+					<h3>API Key</h3>
 					<p>Copy the API key from the box like the one below</p>
 					<img src="img/cartodb_api_key.png" style="background:none; border:none; box-shadow:none;">
 					<p>Be careful with this code, don't share it, or put it on your public GitHub account</p>
@@ -630,7 +661,7 @@ and ne_10m_populated_places.prj</code></pre>
 	<iframe src="http://www.urbanreviewer.org/#map=12/40.7400/-73.9931&sidebar=plans" width="100%" height="500"></iframe>
 </section> -->
 
-<section data-background="#0090D7">
+<!-- <section data-background="#0090D7">
 	<p>With CartoDB, you can build rich web mapping applications.</p>
 	<iframe src="https://dms2203.cartodb.com/viz/447b9adc-6c57-11e5-9129-0e31c9be1b51/embed_map" width="100%" height="500"></iframe>
 </section>
@@ -643,7 +674,7 @@ and ne_10m_populated_places.prj</code></pre>
 <section data-background="#0090D7">
 	<p>With CartoDB, you can build rich web mapping applications.</p>
 	<iframe src="http://beh-gis.github.io/maps/new_rdp.html" width="100%" height="500"></iframe>
-</section>
+</section> -->
 
 <section data-background="#0090D7">
 	<h1>Thank You!, Any Questions?</h1>
