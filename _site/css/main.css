@@ -20,7 +20,7 @@ body {
   /*color: #FFFFFF;*/
   color: #111;
   /*background-color:#0090D7;*/
-  background-color: #BCD8F1;
+  background-color: #0090D7;
   -webkit-text-size-adjust: 100%; }
 
 /**
@@ -179,7 +179,7 @@ pre {
       position: absolute;
       top: 9px;
       right: 30px;
-      background-color: #BCD8F1;
+      background-color: #0090D7;
       border: 1px solid #e8e8e8;
       border-radius: 5px;
       text-align: right; }
