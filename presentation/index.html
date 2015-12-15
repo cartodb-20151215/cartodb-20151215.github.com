@@ -46,8 +46,8 @@
 
 					<!-- <p>Hey, you,</p> -->
 					
-					<h1>The Cloud Is Yours, Get On it!</h1>
-					<img data-src="https://raw.githubusercontent.com/cartodb-20151215/cartodb-20151215.github.com/master/presentation/img/logos_cartofant_cartodb_dark.png" alt="cartodb-logo" width='250px' style="background:none; border:none; box-shadow:none;">
+					<h2>Get onto the Cloud!</h2>
+					<img data-src="img/logos_cartofant_cartodb_dark.png" alt="cartodb-logo" width='250px' style="background:none; border:none; box-shadow:none;">
 					<p> (with your maps and GIS data)</p> 
 					
 					<!-- <p>test					</p> -->
@@ -62,15 +62,15 @@
 
 
 
-				<section data-background="#0090D7">
-					<p>The Stones need to be more inclusionary</p>
-					<p>on who gets to be on the cloud!</p> 
+				<!-- <section data-background="#0090D7"> -->
+					<!-- <p>The Stones need to be more inclusionary</p>
+					<p>on who gets to be on the cloud!</p>  -->
 
 					<!-- UNCOMMENT THIS TO TURN VIDEO/AUDIO FOR STONES!!!!!! -->
 					<!-- <iframe width="420" height="315" src="http://www.youtube.com/embed/YlhPRuAve8k?autoplay=1&cc_load_policy=1&start=157&end=11" frameborder="0"
 					allowfullscreen></iframe> -->
 					
-				</section>
+				<!-- </section> -->
 
 				<section data-background="#0090D7">
 
@@ -161,7 +161,7 @@
 
 				<section>
 					<p>Open a Web Browser and paste...
-					<code>http://localhost:8000</code>
+					<a href='http://localhost:8000' target='_blank'><code>http://localhost:8000</code></a>
 					<p>...into your browser</p>
 				</section> 
 				<section>
@@ -269,7 +269,7 @@ window.onload = function() {
 }
 </script>
 </pre></code>
-					<p>Save the html file, refresh my page and <a href='http://localhost:8000/map/tutorial-1/index_complete.html' target='_blank'>it appears to work</a>.</p>
+					<p>Save the html file, refresh my page and <a href='http://localhost:8000/map/tutorial-1-centered' target='_blank'>it appears to work</a>.</p>
 				</section>
 
 				<section data-background="#0090D7">
@@ -392,7 +392,7 @@ window.onload = function() {
 
 
 <section data-background="#0090D7">
-					<p>Get the new coords for the new re-center to User Location;</p>
+					<p>Get the new coords to re-center to User Location;</p>
 					<p>Then Query (with SQL) the CartoDB common-data account;</p>
 <pre><code>function mapToPosition(position) {
           lon = position.coords.longitude;
@@ -455,7 +455,7 @@ mapToPosition();</pre></code>
 
 
 <section data-background="#0090D7">
-					<p>And with our User Location Latitude,Longitude as the new center and new CircleMarker, we're grabbing the US Census API Data and adding it and other info to the Pop Up.</p>
+					<p>And with our User Location Latitude, Longitude as the new center and new CircleMarker, we're grabbing the US Census API Data and adding it and other info to a Pop Up window.</p>
 <pre><code>$.getJSON(cenURL, function(data) {
           var cenVar = data;
                 
@@ -497,12 +497,12 @@ WHERE ST_INTERSECTS(the_geom,st_GeomFromText('POINT("+lon+" "+lat+")'
 </section>
 
 <section data-background="#0090D7">
-<p>This is what is so exciting about CartoDB, the user can send SQL tasks up to the PostGIS databases, which, I'm assuming is running on a scalable system such as Amazon AWS.</p>
-<p>So throughout the CartoDB platform, we can access and create map data, display it, and modify and geoprocess with the SQL API.</p>
+<p>This is what is so exciting about CartoDB, the user can send SQL tasks up to the PostGIS databases.</p></br></br>
+<p>And throughout the CartoDB platform, we can access and create map data, display it, and modify and geoprocess with the SQL API.</p>
 </section>
 
 <section data-background="#0090D7">
-<p>All <em>without</em>  having to really manage a server and the PostgreSQL databases.</p>
+<p>All <em>without</em>  having to manage a server and the PostgreSQL databases.</p>
 </section>
 
 <section data-background="#0090D7">
@@ -514,7 +514,7 @@ WHERE ST_INTERSECTS(the_geom,st_GeomFromText('POINT("+lon+" "+lat+")'
 </section>
 
 <section data-background="#0090D7">
-<p><em>Less work for everyone.</em></br></br>All while being exposing your organization to a super rich <strong>Geographic Information System.</strong></br></br>That leverages the scalability of <em>the Cloud</em>.</p>
+<p><em>Less work for everyone.</em></br></br>All while exposing your organization to a super rich <strong>Geographic Information System.</strong></br></br>That leverages the scalability of <em>the Cloud</em>.</p>
 </section>
 
 
@@ -525,7 +525,7 @@ WHERE ST_INTERSECTS(the_geom,st_GeomFromText('POINT("+lon+" "+lat+")'
 					<li>2. Explored SQL queries to CartoDB API</li>
 					<li>3. Investigated the SQL query return</li>
 					<li>4. Parsed the return data</li>
-					<li>5. Requested data from US Census API</li>
+					<li>5. Requested additional data from US Census API</li>
 					<li>6. Recentered the map and created a Pop Up with the API data.</li>
 				</section>
 
@@ -620,24 +620,33 @@ and ne_10m_populated_places.prj</code></pre>
 	<img data-src="img/uhf_table.png" style="background:none; border:none; box-shadow:none;">
 </section>
 
-<section>
+<section data-background="#0090D7">
 	<p>With CartoDB, you can build rich web mapping applications.</p>
 	<iframe src="http://beh-gis.github.io/data/cartodb/walkability-ct2010.html" width="100%" height="500"></iframe>
 </section>
 
-<section>
+<!-- <section>
 	<p>With CartoDB, you can build rich web mapping applications.</p>
 	<iframe src="http://www.urbanreviewer.org/#map=12/40.7400/-73.9931&sidebar=plans" width="100%" height="500"></iframe>
-</section>
+</section> -->
 
-<section>
+<section data-background="#0090D7">
 	<p>With CartoDB, you can build rich web mapping applications.</p>
 	<iframe src="https://dms2203.cartodb.com/viz/447b9adc-6c57-11e5-9129-0e31c9be1b51/embed_map" width="100%" height="500"></iframe>
 </section>
 
-<section>
+<section data-background="#0090D7">
 	<p>With CartoDB, you can build rich web mapping applications.</p>
 	<iframe src="https://cartodbacademy.cartodb.com/viz/26250460-05d8-11e4-9e73-0e73339ffa50/embed_map" width="100%" height="500"></iframe>
+</section>
+
+<section data-background="#0090D7">
+	<p>With CartoDB, you can build rich web mapping applications.</p>
+	<iframe src="http://beh-gis.github.io/maps/new_rdp.html" width="100%" height="500"></iframe>
+</section>
+
+<section data-background="#0090D7">
+	<h1>Thank You!, Any Questions?</h1>
 </section>
 <!-- 
 
