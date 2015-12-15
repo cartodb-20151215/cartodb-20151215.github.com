@@ -55,8 +55,9 @@
 				<section data-background="#0090D7">
 					<h2>Today we'll go over...</h2><h4>
 					<li>Creating Your First Web Map, editing JavaScript</li>
+					<li>Geoprocessing with CartoDB SQL API</li>
 					<li>Quick Shapefile import to CartoDB</li>
-					<li>Geoprocessing with CartoDB</li></h4>
+					</h4>
 				</section>
 
 
@@ -287,7 +288,24 @@ window.onload = function() {
 					<img data-src="img/cartodb_map_interface.png" style="background:none; border:none; box-shadow:none; width:600px;">
 					<p>While the idea of <em>coding</em> it all out seems like a step backward in technology, it actually allows the web mapping designer to customize their maps and mapping applications.</p>
 				</section>
-
+<section data-background="#0090D7">
+	<p>The map designer can set many map options. Check out the <a href='http://docs.cartodb.com/cartodb-platform/cartodb-js/api-methods/#cartodbcreatevis' target='_blank'>cartodb.createVis Arguments.</a></p>
+<pre><code>cartodb.createVis('map', 'https://dms8md23.cartodb.com/api/v2/viz/e11893e4-88c8-11e5-8791-0ecfd53eb7d3/viz.json', {
+            title: false,
+            description: true,
+            search: true,
+            tiles_loader: true,
+            center_lat: 40.704424, 
+            center_lon: -73.936596, 
+            zoom: 17,
+            scrollwheel: false,
+            search: false,
+            shareable: false,
+            layer_selector: false,
+            mobile_layout: true,
+        })
+</pre></code>
+</section>
 				<section>
 					<h1>Quick Summary</h1>
 					<li>1. Reviewed the tutorial-1 index.html file</li>
@@ -296,6 +314,208 @@ window.onload = function() {
 					<li>4. Modified the map zoom settings</li>
 					<li>5. Considered coding vs. point-and-click</li>
 				</section>
+
+				<section data-background="#0090D7">
+					<h2>Now in this next example we'll explore...</h2><h4>
+					<li>Geoprocessing with CartoDB SQL API - User location to detect Census Tract</li></h4>
+				</section>
+
+
+				<section>
+					<p><a href='http://localhost:8000/map/tutorial-2/' target='_blank'>Let's Check out Map 2 - User Location - Census Tract</a></p>
+				</section>
+
+
+				<section data-background="#0090D7">
+					<p>A script to detect User Location (which will be called after the map loads)</p>
+<pre><code>var map;  // credit: http://html5doctor.com/finding-your-position-with-geolocation/
+	function detectUserLocation(){
+	if (navigator.geolocation) {
+	  var timeoutVal = 10 * 1000 * 1000;
+	  navigator.geolocation.watchPosition(
+	    mapToPosition, 
+	    alertError,
+	    { enableHighAccuracy: true, timeout: timeoutVal, maximumAge: 0 }
+	  );
+	}
+	else {
+	  alert("Geolocation is not supported by this browser");
+	}
+	function alertError(error) {
+	  var errors = { 
+	    1: 'Permission denied',
+	    2: 'Position unavailable',
+	    3: 'Request timeout'
+	  };
+	  alert("Error: " + errors[error.code]);
+	}
+	}</pre></code>	
+              </section>			
+				<section data-background="#0090D7">
+					<p>Load up the map, detect User Location...</p>
+<pre><code>function main() {
+        cartodb.createVis('map', 'https://dms8md23.cartodb.com/api/v2/viz/e11893e4-88c8-11e5-8791-0ecfd53eb7d3/viz.json', {
+            title: false,
+            description: true,
+            search: true,
+            tiles_loader: true,
+            center_lat: 40.704424, 
+            center_lon: -73.936596, 
+            zoom: 17,
+            scrollwheel: false,
+            search: false,
+            shareable: false,
+            layer_selector: false,
+            mobile_layout: true,
+        })
+        .done(function(vis, layers) {
+          // layer 0 is the base layer, layer 1 is cartodb layer
+          // setInteraction is disabled by default
+          layers[1].setInteraction(true);
+          layers[1].on('featureOver', function(e, pos, latlng, data) {
+            cartodb.log.log(e, pos, latlng, data);
+          });
+          // you can get the native map to work with it
+          map = vis.getNativeMap();
+          // now, perform any operations you need
+          // map.setZoom(3);
+          // map.panTo([50.5, 30.5]);
+          detectUserLocation();
+
+        })
+        .error(function(err) {
+          console.log(err);
+        });
+      }
+      window.onload = main;</pre></code>	
+              </section>	
+
+
+<section data-background="#0090D7">
+					<p>Get the new coords for the new re-center to User Location;</p>
+					<p>Then Query (with SQL) the CartoDB common-data account;</p>
+<pre><code>function mapToPosition(position) {
+          lon = position.coords.longitude;
+          lat = position.coords.latitude;
+     
+          var jsonURL = "https://common-data.cartodb.com/api/v2/sql?q=select geoid from public.tl_2014_census_tracts where st_intersects(the_geom,st_GeomFromText('POINT("+lon+" "+lat+")', 4326)) & format=geojson";
+          
+         // var jsonObj = [];
+         $.getJSON(jsonURL, function(data) {
+             $.each(data.rows, function(i, f) {
+                tblRow   = f.geoid;
+                tractID  = tblRow.substr(5, 6); 
+                stateID  = tblRow.substr(0, 2);
+                countyID = tblRow.substr(2, 3); 
+
+          var cenURL  = "http://api.census.gov/data/2010/sf1?key=30699f15ab4d04a1e0943715b539d256c9a3ee44&get=P0010001&for=tract:"+tractID+"&in=state:"+stateID+"+county:"+countyID
+               
+         $.getJSON(cenURL, function(data) {
+             var cenVar = data;//.split(",",1);//.["P0010001"][0]
+             //popVar = data.str.split(",",-3);
+                      
+          var varName = cenVar[0][0];
+          var popVal  = cenVar[1][0];
+
+          // window.alert(jsonObj);
+
+          //updateQuery();
+          map.setView(new L.LatLng(lat,lon), 18);
+          new L.CircleMarker([lat,lon],{radius: 30}).addTo(map).bindPopup("<b>You are located (via ISP) at: </b>"+lat+", "+lon+" <b></br>Census Tract (2010):</b> "+tblRow+" </br> <b>Population (Census 2010)</b> ("+varName+") of <b>"+popVal+"</b></br> Via <a href='http://cartodb.com'>CartoDB and Common Data</a>, PostGIS (SQL), and the <a href='http://api.census.gov/'>US Census API</a>").openPopup();
+          //new CircleMarker;
+
+});
+         });});
+};
+
+mapToPosition();</pre></code>	
+              </section>	
+
+<section data-background="#0090D7">
+					<p>This SQL query asks the CartoDB common-data account, what Census Tract <strong>Intersects</strong> with our Latitude, Longitude coords from the User Location, and gets it returned as <strong>GeoJSON</strong>.</p>
+					
+<pre><code>var jsonURL = "https://common-data.cartodb.com/api/v2/sql?q=select 
+	geoid from public.tl_2014_census_tracts where 
+	st_intersects(the_geom,st_GeomFromText('POINT("+lon+" "+lat+")', 4326)) 
+	& format=geojson";</pre></code>	
+              </section>	
+
+<section data-background="#0090D7">
+					<p>Now we want to grab elements from that JSON file and construct a call to the US Census API for Total Population (for the tract), using the Census Tract ID from the SQL query against common-data;</p>
+<pre><code>$.getJSON(jsonURL, function(data) {
+             $.each(data.rows, function(i, f) {
+                tblRow   = f.geoid;
+                tractID  = tblRow.substr(5, 6); 
+                stateID  = tblRow.substr(0, 2);
+                countyID = tblRow.substr(2, 3); 
+
+          var cenURL  = "http://api.census.gov/data/2010/sf1?key=30699f15ab4d04a1e0943715b539d256c9a3ee44&get=P0010001&for=tract:"+tractID+"&in=state:"+stateID+"+county:"+countyID</pre></code>	
+              </section>	
+
+
+
+<section data-background="#0090D7">
+					<p>And with our User Location Latitude,Longitude as the new center and new CircleMarker, we're grabbing the US Census API Data and adding it and other info to the Pop Up.</p>
+<pre><code>$.getJSON(cenURL, function(data) {
+          var cenVar = data;
+                
+          var varName = cenVar[0][0];
+          var popVal  = cenVar[1][0];
+        
+          map.setView(new L.LatLng(lat,lon), 18);
+          new L.CircleMarker([lat,lon],{radius: 30}).addTo(map).bindPopup("<b>You are located (via ISP) 
+          at: </b>"+lat+", "+lon+" <b></br>Census Tract (2010):</b> "+tblRow+" </br> <b>Population 
+          (Census 2010)</b> ("+varName+") of <b>"+popVal+"</b></br> Via <a href='http://cartodb.com'>
+          CartoDB and Common Data</a>, PostGIS (SQL), and the <a href='http://api.census.gov/'>US Census 
+          API</a>").openPopup();
+          //new CircleMarker;
+
+});
+         });});
+};
+mapToPosition();</pre></code>	
+              </section>
+
+
+
+              <section data-background="#0090D7">
+              	<p>So the key <strong>SQL</strong> function we are using is <strong>ST_Intersects</strong> <a href='http://postgis.net/docs/ST_Intersects.html' target='_blank'>(PostGIS documentation) </a>.</p>
+
+              	<p>And what's cool about that is we're doing it in the URL via CartoDB SQL API. First with the URL,</br>
+              <pre><code>https://common-data.cartodb.com/api/v2/sql?q=</pre></code></p>
+<p>the SQL query,</p>
+<pre><code>geoid FROM public.tl_2014_census_tracts 
+WHERE ST_INTERSECTS(the_geom,st_GeomFromText('POINT("+lon+" "+lat+")'
+, 4326)
+)</pre></code>
+<p>and the return as GeoJSON.</p>
+<pre><code>& format=geojson";</pre></code>
+              </section>
+
+<section data-background="#0090D7">
+<img data-src="https://s-media-cache-ak0.pinimg.com/originals/4d/32/f1/4d32f142871c29466f303c2c80f24ed4.gif" style="background:none; border:none; box-shadow:none; width:800px;">
+</section>
+
+<section data-background="#0090D7">
+<p>This is what is so exciting about CartoDB, the user can send SQL tasks up to the PostGIS databases, which, I'm assuming is running on a scalable system such as Amazon AWS.</p>
+<p>So throughout the CartoDB platform, we can access and create map data, display it, and modify and geoprocess with the SQL API.</p>
+</section>
+
+<section data-background="#0090D7">
+<p>All <em>without</em>  having to really manage a server and the PostgreSQL databases.</p>
+</section>
+
+<section data-background="#0090D7">
+<p><em>What does that mean?</em></p>
+</section>
+
+<section data-background="#0090D7">
+<p>Less work for the IT team, </br>less work for web mapping team, </br>less work for the GIS analysts.</p>
+</section>
+
+<section data-background="#0090D7">
+<p><em>Less work for everyone.</em></br></br>All while being exposing your organization to a super rich <strong>Geographic Information System.</strong></br></br>That leverages the scalability of <em>the Cloud</em>.</p>
+</section>
 
 				<section data-background="#0090D7">
 					<h2>Unless there's any questions, let's move on to...</h2><h4>
@@ -375,7 +595,7 @@ and ne_10m_populated_places.prj</code></pre>
 <section>
 	<p>Now we can run the following code...</p>
 	<p>Which will:</p>
-	<li>1. Find any <code>.shp</code> filenames</li>
+	<li>1. Find the first <code>.shp</code> filename</li>
 	<li>2. Zip the <code>.shp</code> and any associated files</li>
 	<li>3. And then upload to your CartoDB account!</li>
 </section>
@@ -395,7 +615,7 @@ and ne_10m_populated_places.prj</code></pre>
 
  -->
 
-				<section data-background="#0090D7">
+				<!-- <section data-background="#0090D7">
 					
 					<p>TEST</p>
 				</section>
@@ -431,7 +651,7 @@ and ne_10m_populated_places.prj</code></pre>
 					Python, nightly backups of all your data tables. 
 				</section>
 			</div>
-
+ -->
 
 
 
